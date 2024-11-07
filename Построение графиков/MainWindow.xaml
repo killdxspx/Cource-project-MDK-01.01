@@ -1,0 +1,101 @@
+﻿<Window x:Class="Построение_графиков.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Построение_графиков" xmlns:oxy="http://oxyplot.org/wpf"
+        mc:Ignorable="d"
+        Title="Построение графиков" Height="500" Width="800" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None" Background="Gray" Icon="Resource/icon.png">
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" Background="DarkGray">
+            <MenuItem Header="Файл" ToolTip="Файл">
+                <MenuItem Header="Сохранить" x:Name="SaveFile" Click="SaveFile_Click" ToolTip="Сохранение графика в указанное место"/>
+                <Separator/>
+                <MenuItem Header="Выход" x:Name="Exit" Click="Exit_Click" ToolTip="Выход из программы"/>
+            </MenuItem>
+
+            <MenuItem Header="Помощь" ToolTip="Раздел с информацией">
+                <MenuItem Header="О программе" x:Name="About" Click="About_Click" ToolTip="Информация о программе"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid Background="Gray">
+            <Label Content="Выберите функцию:" HorizontalAlignment="Left" Margin="25,36,0,0" VerticalAlignment="Top"/>
+            <Border CornerRadius="10" BorderBrush="Gray" BorderThickness="1" Background="#FFC0BCBC" Margin="25,64,521,294">
+                <ListBox x:Name="ChoiceListBox" SelectionChanged="ChoiceListBox_SelectionChanged" Background="#FFC0BCBC" Margin="5,5,5,5" ToolTip="Выбор конкретной функции">
+                    <ListBoxItem Content="y = mod(x, a)" />
+                    <ListBoxItem Content="y = x^3" />
+                    <ListBoxItem Content="y = a*x^3" />
+                    <ListBoxItem Content="y = cos(x)" />
+                    <ListBoxItem Content="y = sqrt(x)" />
+                    <ListBoxItem Content="y = x^a" />
+                    <ListBoxItem Content="y = ln(x)" />
+                    <ListBoxItem Content="y = arcsin(x)" />
+                    <ListBoxItem Content="y = arccos(x)" />
+                    <ListBoxItem Content="y = arctng(x)" />
+                    <ListBoxItem Content="y = arcctg(x)" />
+                    <ListBoxItem Content="y = log(x, a)" />
+                    <ListBoxItem Content="y = 1/x" />
+                    <ListBoxItem Content="y = ln(cos(x))" />
+                    <ListBoxItem Content="y = sqrt(arctng(x))" />
+                    <ListBoxItem Content="y = ln(sin(x))" />
+                    <ListBoxItem Content="y = pow(exp(x), 2)" />
+                    <ListBoxItem Content="y = exp(x)" />
+                    <ListBoxItem Content="y = a*x^2 + b*x + c" />
+                    <ListBoxItem Content="y = a*sin(x*b) + c" />
+                    <ListBoxItem Content="y = a*x + b" />
+                    <ListBoxItem Content="y = a*x^3 + b*x^2" />
+                    <ListBoxItem Content="y = a/x + b*x" />
+                    <ListBoxItem Content="y = sin(x)*cos(x)" />
+                </ListBox>
+            </Border>
+
+            <Label Content="Параметры:" HorizontalAlignment="Left" Margin="25,189,0,0" VerticalAlignment="Top"/>
+
+            <Border CornerRadius="10" BorderBrush="DarkGray" BorderThickness="1" Background="DarkGray" Margin="25,214,521,143">
+                <DataGrid x:Name="ParametrDataGrid" AutoGenerateColumns="False" IsReadOnly="True" Margin="5,5,5,5" Background="DarkGray" BorderThickness="0" GridLinesVisibility="None" ToolTip="Параметр выбранной функции"/>
+            </Border>
+
+            <Label Content="Область построения:" HorizontalAlignment="Left" Margin="25,340,0,0" VerticalAlignment="Top"/>
+
+            <Label Content="От:" HorizontalAlignment="Left" Margin="25,368,0,0" VerticalAlignment="Top"/>
+
+            <Label Content="До:" HorizontalAlignment="Left" Margin="154,368,0,0" VerticalAlignment="Top"/>
+
+            <TextBox x:Name="FromTextBox" HorizontalAlignment="Left" Margin="50,367,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="30" Background="DarkGray" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" TextAlignment="Center" VerticalContentAlignment="Center" ToolTip="Область построения от">
+                <TextBox.Template>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10" BorderBrush="DarkGray" BorderThickness="1">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </TextBox.Template>
+            </TextBox>
+
+            <TextBox x:Name="BeforeTextBox" HorizontalAlignment="Left" Margin="179,367,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" Height="30" Background="DarkGray" PreviewTextInput="TextBox_PreviewTextInput" PreviewKeyDown="TextBox_PreviewKeyDown" TextAlignment="Center" VerticalContentAlignment="Center" ToolTip="Область построения до">
+                <TextBox.Template>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10" BorderBrush="DarkGray" BorderThickness="1">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </TextBox.Template>
+            </TextBox>
+
+            <Button x:Name="BuildButton" Click="BuildButton_Click" Content="Построить" HorizontalAlignment="Left" Margin="25,407,0,0" VerticalAlignment="Top" Width="256" Background="DarkGray" Height="29" ToolTip="Расчет функции">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="10" BorderBrush="DarkGray" BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Border CornerRadius="10" BorderBrush="Transparent" Background="DarkGray" Margin="350,25,25,25">
+                <oxy:PlotView x:Name="PlotView" HorizontalAlignment="Center" Height="396" VerticalAlignment="Center" Width="406" Background="DarkGray" ToolTip="Область, где отображается функция"/>
+            </Border>
+        </Grid>
+    </DockPanel>
+</Window>
